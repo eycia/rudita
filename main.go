@@ -8,10 +8,10 @@ TODO:
 	//poller
 
 	//parser
-	// - lex
-	// - yacc
 
 	//executor
+	// - lex
+	// - yacc
 
 	//sender
 	`)
