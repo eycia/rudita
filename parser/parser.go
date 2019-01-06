@@ -13,6 +13,7 @@ const (
 // Log is always string first.
 type ValueGetter interface {
 	String(field string) string
+	For(func(field, value string))
 }
 
 type Parser interface {
@@ -24,4 +25,10 @@ type MapValueGetter map[string]string
 
 func (p MapValueGetter) String(field string) string {
 	return p[field]
+}
+
+func (p MapValueGetter) For(f func(field, value string)) {
+	for k, v := range p {
+		f(k, v)
+	}
 }
