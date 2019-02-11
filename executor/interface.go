@@ -7,7 +7,7 @@ import (
 )
 
 type Expr interface {
-	Expr(values parser.ValueGetter, expr string) interface{}
+	Exec(values parser.ValueGetter, expr string) (interface{}, error)
 }
 
 type Point interface {
