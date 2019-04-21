@@ -18,20 +18,26 @@ type SimpleSQLConfig struct {
 	CaluExpr []string
 	CaluAs   []string
 
+	Where string
+
 	GroupBy []string
 
 	GroupbyAggrExpr []string
 	GroupbyAggrAs   []string
 
-	Where, Having       string
+	Having              string
 	GroupbyTimeExpr     string
 	GroupbyTimeDuration time.Duration
 
-	ExprExecutor *executor.Expr
+	ExprExecutor executor.Expr
 }
 
 type SimpleSQL struct {
 	conf *SimpleSQLConfig
+}
+
+func NewSimpleSQL(config *SimpleSQLConfig) *SimpleSQL {
+	return &SimpleSQL{config}
 }
 
 func (p *SimpleSQL) Start(feed chan<- parser.ValueGetter) {
@@ -39,5 +45,5 @@ func (p *SimpleSQL) Start(feed chan<- parser.ValueGetter) {
 }
 
 func (p *SimpleSQL) Sum() <-chan executor.Point {
-
+	return nil
 }
