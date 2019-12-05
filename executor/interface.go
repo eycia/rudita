@@ -13,7 +13,7 @@ type Expr interface {
 type Point interface {
 	Time() time.Time
 
-	Value(field string) float64
+	Value(metric string) float64
 	Tag(tagk string) string
 
 	ValueForEach(func(field string, value float64))

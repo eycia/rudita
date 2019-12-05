@@ -16,6 +16,7 @@ type ValueGetter interface {
 	Int(field string) (int64, bool)
 	Float(field string) (float64, bool)
 	Bool(field string) (bool, bool)
+	Interface(key string) interface{}
 
 	SetString(key string, value string) ValueGetter
 	SetInt(key string, value int64) ValueGetter
@@ -23,6 +24,8 @@ type ValueGetter interface {
 	SetBool(key string, value bool) ValueGetter
 
 	For(func(field string, kind Kind, value interface{}))
+
+	ForEach(func(field string, value interface{}))
 
 	ForEachKind(
 		fString func(field string, value string),
@@ -78,6 +81,10 @@ func (p MapValueGetter) Bool(field string) (bool, bool) {
 	return b, ok
 }
 
+func (p MapValueGetter) Interface(field string) interface{} {
+	return p[field]
+}
+
 func (p MapValueGetter) For(f func(field string, kind Kind, value interface{})) {
 	for k, v := range p {
 		switch vv := v.(type) {
@@ -91,6 +98,12 @@ func (p MapValueGetter) For(f func(field string, kind Kind, value interface{})) 
 			f(k, Bool, vv)
 		}
 		// skip if not match
+	}
+}
+
+func (p MapValueGetter) ForEach(f func(field string, value interface{})) {
+	for k, v := range p {
+		f(k, v)
 	}
 }
 
