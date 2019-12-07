@@ -1,9 +1,9 @@
-package expr
+package lua_transform
 
 import (
 	"fmt"
+	"github.com/eycia/rudita/basic"
 
-	"github.com/eycia/rudita/parser"
 	"github.com/sirupsen/logrus"
 	lua "github.com/yuin/gopher-lua"
 )
@@ -22,7 +22,7 @@ func NewLuaExpr(option *LuaExprOption) *LuaExpr {
 	return &LuaExpr{}
 }
 
-func (p *LuaExpr) Exec(values parser.ValueGetter, expr string) (interface{}, error) {
+func (p *LuaExpr) Exec(values basic.ValueGetter, expr string) (interface{}, error) {
 	L := lua.NewState()
 	defer L.Close()
 

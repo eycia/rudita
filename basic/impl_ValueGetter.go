@@ -1,43 +1,4 @@
-package parser
-
-type Kind int
-
-const (
-	Null Kind = iota
-	String
-	Int
-	Float
-	Bool
-	//Time
-)
-
-type ValueGetter interface {
-	String(field string) (string, bool)
-	Int(field string) (int64, bool)
-	Float(field string) (float64, bool)
-	Bool(field string) (bool, bool)
-	Interface(key string) interface{}
-
-	SetString(key string, value string) ValueGetter
-	SetInt(key string, value int64) ValueGetter
-	SetFloat(key string, value float64) ValueGetter
-	SetBool(key string, value bool) ValueGetter
-
-	For(func(field string, kind Kind, value interface{}))
-
-	ForEach(func(field string, value interface{}))
-
-	ForEachKind(
-		fString func(field string, value string),
-		fInt func(field string, value int64),
-		fFloat func(field string, value float64),
-		fBool func(field string, value bool),
-	)
-}
-type Parser interface {
-	//XXX: []byte?
-	Parse(line string) ValueGetter
-}
+package basic
 
 type MapValueGetter map[string]interface{}
 
@@ -57,6 +18,11 @@ func (p MapValueGetter) SetFloat(key string, value float64) ValueGetter {
 }
 
 func (p MapValueGetter) SetBool(key string, value bool) ValueGetter {
+	p[key] = value
+	return p
+}
+
+func (p MapValueGetter) SetInterface(key string, value interface{}) ValueGetter {
 	p[key] = value
 	return p
 }
@@ -85,7 +51,7 @@ func (p MapValueGetter) Interface(field string) interface{} {
 	return p[field]
 }
 
-func (p MapValueGetter) For(f func(field string, kind Kind, value interface{})) {
+func (p MapValueGetter) For(f func(field string, kind ValueKind, value interface{})) {
 	for k, v := range p {
 		switch vv := v.(type) {
 		case string:

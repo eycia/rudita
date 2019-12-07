@@ -1,8 +1,7 @@
-package expr
+package lua_transform
 
 import (
-	"github.com/eycia/rudita/executor"
-	"github.com/eycia/rudita/parser"
+	"github.com/eycia/rudita/basic"
 	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 )
@@ -11,11 +10,10 @@ func TestLuaExpr_Exec(t *testing.T) {
 	Convey("new a LuaExpr should ok", t, func() {
 		lua := NewLuaExpr(nil)
 		So(lua, ShouldNotBeNil)
-		So(lua, ShouldImplement, (*executor.Expr)(nil))
 
 		Convey("when ValueGetter is empty", func() {
 
-			emptyValueGetter := parser.MapValueGetter{}
+			emptyValueGetter := basic.MapValueGetter{}
 			So(emptyValueGetter, ShouldNotBeNil)
 
 			Convey("LuaExpr should Exec() some expr correct", func() {
@@ -38,7 +36,7 @@ func TestLuaExpr_Exec(t *testing.T) {
 
 		Convey("when ValueGetter is not empty", func() {
 
-			emptyValueGetter := parser.MapValueGetter{}.
+			emptyValueGetter := basic.MapValueGetter{}.
 				SetString("name", "eycia").
 				SetBool("man", true).
 				SetInt("age", 24).

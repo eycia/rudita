@@ -1,4 +1,4 @@
-package framwork
+package notuse
 
 import (
 	"testing"
@@ -12,7 +12,7 @@ import (
 func TestSimpleSQL(t *testing.T) {
 	so, when := testutil.Use(t)
 
-	luaExprExecutor := expr.NewLuaExpr(&expr.LuaExprOption{})
+	luaExprExecutor := lua_transform.NewLuaExpr(&lua_transform.LuaExprOption{})
 
 	exprs := []struct {
 		expr executor.Expr

@@ -42,11 +42,12 @@
 //  group by group_by_field..., time(expr, by)           <--------------aggr
 //  having                                               <--------------filter3
 //
-// | parse   : []byte => map[string]interface{}
-// | filter1 :
-// | rewrite : map[string]interface{} => map[string]interface{} // every tag rewrite here(include time), some value rewire here
-// | filter2 :
-// | aggr    : map[string]interface{} -> reduce(tagKey []string, apply func(valueKey)func(sum, new)newsum) -> (tag map[string]interface{}, value map[string]interface{})
+// | parse    : []byte => map[string]interface{}
+// | filter1  :
+// | rewrite1 : map[string]interface{} => map[string]interface{} // every tag rewrite here(include time), some value rewire here
+// | filter2  :
+// | aggr     : map[string]interface{} -> reduce(tagKey []string, apply func(valueKey)func(sum, new)newsum) -> (tag map[string]interface{}, value map[string]interface{})
 //                    // do value reduce here, time and tags are fixed, not allow rewrite here
+// | rewrite2 : combine some values
 // | filter3
 // v
